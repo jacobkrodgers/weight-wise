@@ -63,3 +63,5 @@ async function recommendedCalorieIntake(): Promise<number> {
     return 0; // temp
 }
 
+
+export { addUser, getUserByEmail, daysForChange, recommendedCalorieIntake };
