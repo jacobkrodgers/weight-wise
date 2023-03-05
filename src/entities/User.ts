@@ -24,9 +24,9 @@ export class User {
     userSex: string;
 
     @Column({ unique: true })
-    userHeightinFeet: number;
+    userHeightInFeet: number;
 
-    userHeightinInches: number;
+    userHeightInInches: number;
 
     @Column({ unique: true })
     userTargetWeight: number;
@@ -38,6 +38,20 @@ export class User {
     userAge: number;
 
     @Column({ unique: true })
-    userDateForChange: number;
-}
+    userDateForChange: string;
 
+    @Column({ unique: true })
+    userWeeklyWorkout: number;
+
+    @Column({ unique: true })
+    userProteinGramsNeededDaily: number
+
+    @Column({ unique: true })
+    userFatGramsNeededDaily: number
+
+    @Column({ unique: true })
+    userCarbohydratesLowEndGramsNeededDaily: number
+
+    @Column({ unique: true })
+    userCarbohydratesHighEndGramsNeededDaily: number
+}
