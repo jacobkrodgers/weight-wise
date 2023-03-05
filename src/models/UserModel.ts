@@ -37,8 +37,7 @@ async function daysForChange(userTargetDate: string, userID: string): Promise<Ar
     weightRepository.findOne({ where: { userID } });
 
     let userWeight = new UserWeights();
-    userWeight.userTargetWeightTotalDays = eventDays[0];
-    userWeight.userTargetWeightCurrentDaysLeft = eventDays[1];
+    [userWeight.userTargetWeightTotalDays, userWeight.userTargetWeightCurrentDaysLeft] = eventDays;
 
     userWeight = await weightRepository.save(userWeight);
 
@@ -108,10 +107,7 @@ async function recommendedCalorieIntake(userId: string): Promise<Array<number>> 
 
     userRepository.findOne({ where: { userId }});
 
-    user.userProteinGramsNeededDaily = gramsOfCalories[0];
-    user.userFatGramsNeededDaily = gramsOfCalories[1];
-    user.userCarbohydratesLowEndGramsNeededDaily = gramsOfCalories[2];
-    user.userCarbohydratesHighEndGramsNeededDaily = gramsOfCalories[3];
+    [user.userProteinGramsNeededDaily, user.userFatGramsNeededDaily, user.userCarbohydratesLowEndGramsNeededDaily, user.userCarbohydratesHighEndGramsNeededDaily] = gramsOfCalories;
 
     user = await userRepository.save(user);
 
