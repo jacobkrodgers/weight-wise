@@ -35,11 +35,5 @@
   },
   "parserOptions": {
     "project": "./tsconfig.json"
-  },
-  "prettier/prettier": [
-    "error",
-    {
-      "endOfLine": "auto"
-    }
-  ]
+
 }
