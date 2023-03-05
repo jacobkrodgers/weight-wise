@@ -35,5 +35,5 @@
   },
   "parserOptions": {
     "project": "./tsconfig.json"
-
+  }
 }
