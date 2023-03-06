@@ -8,3 +8,9 @@ type AuthRequest = {
   email: string;
   password: string;
 };
+
+type RegisterRequest = {
+  firstName: string;
+  lastName: string;
+  authRequest: AuthRequest;
+};
