@@ -2,6 +2,7 @@ import './config';
 import 'express-async-errors';
 import express, { Express } from 'express';
 import { registerUser, logIn } from './controllers/UserProfileController';
+import { checkPhoto } from './controllers/ProgressionPhotosController';
 
 const app: Express = express();
 app.use(express.json());
@@ -10,7 +11,7 @@ const { PORT } = process.env;
 
 app.post('/users', registerUser); // Create an account
 app.post('/login', logIn); // Log in to an account
-
+app.post('/photo', checkPhoto);
 // post('/api/user/weight-tracking') ---- Jeffrey
 // get('/api/user/weight-tracking')  ---- Jeffrey
 
