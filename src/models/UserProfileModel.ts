@@ -1,16 +1,16 @@
 import { AppDataSource } from '../dataSource';
-import { UserProfile } from '../entities/UserProfile';
+import { User } from '../entities/User';
 
-const userRepository = AppDataSource.getRepository(UserProfile);
+const userRepository = AppDataSource.getRepository(User);
 
 async function addUser(
   firstName: string,
   lastName: string,
   email: string,
   passwordHash: string
-): Promise<UserProfile> {
+): Promise<User> {
   // Create the new user object
-  let newUser = new UserProfile();
+  let newUser = new User();
   newUser.firstName = firstName;
   newUser.lastName = lastName;
   newUser.email = email;
@@ -25,7 +25,7 @@ async function addUser(
   return newUser;
 }
 
-async function getUserByEmail(email: string): Promise<UserProfile | null> {
+async function getUserByEmail(email: string): Promise<User | null> {
   return userRepository.findOne({ where: { email } });
 }
 

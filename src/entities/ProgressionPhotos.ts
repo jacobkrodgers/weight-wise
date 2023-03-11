@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, Relation } from 'typeorm';
+import { User } from './User';
 
 // This entity stores up to five user-provided weight-loss progression photos.
 
@@ -8,20 +9,8 @@ export class ProgressionPhotos {
   userId: string;
 
   @Column('simple-json')
-  begingingPhoto: { photo: string; uploadDate: Date };
+  progressionPhotos: { photo: string; uploadDate: Date };
 
-  @Column('simple-json')
-  progressionPhoto1: { photo: string; uploadDate: Date };
-
-  @Column('simple-json')
-  progressionPhoto2: { photo: string; uploadDate: Date };
-
-  @Column('simple-json')
-  progressionPhoto3: { photo: string; uploadDate: Date };
-
-  @Column('simple-json')
-  progressionPhoto4: { photo: string; uploadDate: Date };
-
-  @Column('simple-json')
-  progressionPhoto5: { photo: string; uploadDate: Date };
+  @ManyToOne(() => User, (user) => user.userId)
+  book: Relation<User>[];
 }
