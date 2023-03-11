@@ -2,27 +2,24 @@ import './config';
 import 'express-async-errors';
 import express, { Express } from 'express';
 import { registerUser, logIn } from './controllers/UserProfileController';
-import { checkPhoto } from './controllers/ProgressionPhotosController';
+import { notImplemented } from './controllers/NotImplemented';
 
 const app: Express = express();
 app.use(express.json());
+app.use(express.static('public', { extensions: ['html'] }));
 
 const { PORT } = process.env;
 
-app.post('/users', registerUser); // Create an account
-app.post('/login', logIn); // Log in to an account
-app.post('/photo', checkPhoto);
-// post('/api/user/weight-tracking') ---- Jeffrey
-// get('/api/user/weight-tracking')  ---- Jeffrey
+app.post('/api/users', registerUser); // Create an account
+app.post('/api/login', logIn); // Log in to an account
 
-// post('/api/user/progress-photos') ---- Jacob
-// get('/api/user/progress-photos')  ---- Jacob
+app.post('/api/:userName/progress-photos', notImplemented); // Upload progress photo
+app.get('/api/:userName/progress-photos', notImplemented); // View progress photos
 
-// post('/api/user/profile')         ---- Jacob
-// get('/api/user/profile')          ---- Jacob
+app.post('/api/:userName/weight-tracking', notImplemented); // Create weight-loss profile for user  ---- Jeffrey
+app.get('/api/:userName/weight-tracking', notImplemented); // View user's weight-loss profile  ---- Jeffrey
 
-// post('/api/user/badges')          ---- Jacob
-// get('/api/user/badges')           ---- Jacob
+app.get('/api/user/badges', notImplemented); // Displays badges from rewards system ---- Jacob
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
