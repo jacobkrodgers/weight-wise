@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Relation } from 'typeorm';
 import { ProgressionPhotos } from './ProgressionPhotos';
 
 // This entity stores the minimum information required to create an account.
@@ -26,6 +26,6 @@ export class User {
   @Column()
   joinDate: string;
 
-  @ManyToOne(() => ProgressionPhotos, (photos) => photos.progressionPhotos)
+  @OneToMany(() => ProgressionPhotos, (photos) => photos.photoId)
   reviews: Relation<ProgressionPhotos>[];
 }

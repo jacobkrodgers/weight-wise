@@ -19,7 +19,7 @@ app.get('/api/:userName/progress-photos', notImplemented); // View progress phot
 app.post('/api/:userName/weight-tracking', notImplemented); // Create weight-loss profile for user  ---- Jeffrey
 app.get('/api/:userName/weight-tracking', notImplemented); // View user's weight-loss profile  ---- Jeffrey
 
-app.get('/api/user/badges', notImplemented); // Displays badges from rewards system ---- Jacob
+app.get('/api/:userName/badges', notImplemented); // Displays badges from rewards system ---- Jacob
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);

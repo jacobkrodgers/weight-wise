@@ -1,16 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, Relation } from 'typeorm';
 import { User } from './User';
 
-// This entity stores up to five user-provided weight-loss progression photos.
+// Stores the path to a progression photo and the date it was uploaded.
 
 @Entity()
 export class ProgressionPhotos {
   @PrimaryGeneratedColumn('uuid')
-  userId: string;
+  photoId: string;
 
-  @Column('simple-json')
-  progressionPhotos: { photo: string; uploadDate: Date };
+  @Column({ unique: true })
+  photoPath: string;
+
+  @Column()
+  uploadDate: Date;
 
   @ManyToOne(() => User, (user) => user.userId)
-  book: Relation<User>[];
+  book: Relation<User>;
 }

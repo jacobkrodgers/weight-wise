@@ -1,0 +1,4 @@
+Update ProgressionPhotosModel
+Update ProgressionPhotosController
+Create Badge Entity/Establish relations
+
