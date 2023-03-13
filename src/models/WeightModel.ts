@@ -1,7 +1,9 @@
 import { AppDataSource } from '../dataSource';
 import { UserWeights } from '../entities/Weight';
+import { DietInfo } from '../entities/DietInfo';
 
 const weightRepository = AppDataSource.getRepository(UserWeights);
+const userRepository = AppDataSource.getRepository(UserWeights);
 
 async function daysForChange(userTargetDate: string, userID: string): Promise<Array<number>> {
   const startDate: Date = new Date();
@@ -23,35 +25,35 @@ async function daysForChange(userTargetDate: string, userID: string): Promise<Ar
   return eventDays;
 }
 
-async function recommendedCalorieIntake(userId: string): Promise<Array<number>> {
-  let user = new User();
+async function recommendedCalorieIntake(userID: string): Promise<Array<number>> {
+  let userInfo = new UserWeights();
 
   let BMR = 0; // Basal Metabolic Rate
-  const sex = user.userSex.toLowerCase();
-  const heightInInches = user.userHeightInFeet * 12 + user.userHeightInInches;
+  const sex = userInfo.userSex.toLowerCase();
+  const heightInInches = userInfo.userHeightInFeet * 12 + userInfo.userHeightInInches;
 
-  const userWeightInKG = (user.userWeight * 16) / 28.3495 / 1000;
+  const userWeightInKG = (userInfo.userWeight * 16) / 28.3495 / 1000;
   const UserHeightToCentimeters = heightInInches * 2.54;
 
   if (sex === 'male') {
-    BMR = 10 * userWeightInKG + 6.25 * UserHeightToCentimeters - 5 * user.userAge + 5;
+    BMR = 10 * userWeightInKG + 6.25 * UserHeightToCentimeters - 5 * userInfo.userAge + 5;
   } else if (sex === 'female') {
-    BMR = 10 * userWeightInKG + 6.25 * UserHeightToCentimeters - 5 * user.userAge - 161;
+    BMR = 10 * userWeightInKG + 6.25 * UserHeightToCentimeters - 5 * userInfo.userAge - 161;
   }
 
   let TDEE = 0; // Total Daily Energy Expenditure
   let TDEE_COUNT = 0;
 
-  if (user.userWeeklyWorkout <= 0) {
+  if (userInfo.userWeeklyWorkout <= 0) {
     TDEE = BMR * 1.2;
     TDEE_COUNT = 1;
-  } else if (user.userWeeklyWorkout >= 1 && user.userWeeklyWorkout <= 3) {
+  } else if (userInfo.userWeeklyWorkout >= 1 && userInfo.userWeeklyWorkout <= 3) {
     TDEE = BMR * 1.375;
     TDEE_COUNT = 2;
-  } else if (user.userWeeklyWorkout >= 4 && user.userWeeklyWorkout <= 5) {
+  } else if (userInfo.userWeeklyWorkout >= 4 && userInfo.userWeeklyWorkout <= 5) {
     TDEE = BMR * 1.55;
     TDEE_COUNT = 3;
-  } else if (user.userWeeklyWorkout >= 6 && user.userWeeklyWorkout <= 7) {
+  } else if (userInfo.userWeeklyWorkout >= 6 && userInfo.userWeeklyWorkout <= 7) {
     TDEE = BMR * 1.725;
     TDEE_COUNT = 4;
   } else {
@@ -59,11 +61,13 @@ async function recommendedCalorieIntake(userId: string): Promise<Array<number>> 
     TDEE_COUNT = 5;
   }
 
+  let userDietInfo = new DietInfo();
+
   let proteinGrams = 0;
   let carbohydrateGramsLowEnd = 0;
   let carbohydrateGramsHighEnd = 0;
   let fatGrams = 0;
-  const bodyWeightInKG = user.userWeight / 2.2;
+  const bodyWeightInKG = userInfo.userWeight / 2.2;
 
   // Grams of Protein per day
   if (TDEE_COUNT === 1) {
@@ -92,16 +96,17 @@ async function recommendedCalorieIntake(userId: string): Promise<Array<number>> 
     carbohydrateGramsHighEnd,
   ];
 
-  userRepository.findOne({ where: { userId } });
+  userRepository.findOne({ where: { userID } });
 
   [
-    user.userProteinGramsNeededDaily,
-    user.userFatGramsNeededDaily,
-    user.userCarbohydratesLowEndGramsNeededDaily,
-    user.userCarbohydratesHighEndGramsNeededDaily,
+    userDietInfo.userProteinGramsNeededDaily,
+    userDietInfo.userFatGramsNeededDaily,
+    userDietInfo.userCarbohydratesLowEndGramsNeededDaily,
+    userDietInfo.userCarbohydratesHighEndGramsNeededDaily,
   ] = gramsOfCalories;
 
-  user = await userRepository.save(user);
+  userInfo = await userRepository.save(userInfo);
+  userDietInfo = await userRepository.save(userDietInfo);
 
   return gramsOfCalories;
 }

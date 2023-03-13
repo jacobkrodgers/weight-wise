@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Relation } from 'typeorm';
+import { User } from './User';
 
 @Entity()
 export class UserWeights {
@@ -10,12 +11,6 @@ export class UserWeights {
 
   @Column()
   userTargetWeightCurrentDaysLeft: number;
-
-  @Column()
-  userSuggestedCalorieIntake: number;
-
-  @Column()
-  userSuggestedHoursToWorkout: number;
 
   @Column({ unique: true })
   userWeight: number;
@@ -43,15 +38,6 @@ export class UserWeights {
   @Column({ unique: true })
   userWeeklyWorkout: number;
 
-  @Column({ unique: true })
-  userProteinGramsNeededDaily: number;
-
-  @Column({ unique: true })
-  userFatGramsNeededDaily: number;
-
-  @Column({ unique: true })
-  userCarbohydratesLowEndGramsNeededDaily: number;
-
-  @Column({ unique: true })
-  userCarbohydratesHighEndGramsNeededDaily: number;
+  @ManyToOne(() => User, (user) => user.weights)
+  user: Relation<User>;
 }

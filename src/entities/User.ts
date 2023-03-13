@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Relation } from 'typeorm';
 import { ProgressionPhotos } from './ProgressionPhotos';
+import { UserWeights } from './Weight';
 
 // This entity stores the minimum information required to create an account.
 
@@ -28,4 +29,7 @@ export class User {
 
   @OneToMany(() => ProgressionPhotos, (photos) => photos.photoId)
   reviews: Relation<ProgressionPhotos>[];
+
+  @OneToMany(() => UserWeights, (weights) => weights.userWeight)
+  weights: Relation<UserWeights>[];
 }
