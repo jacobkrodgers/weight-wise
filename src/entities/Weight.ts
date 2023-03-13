@@ -39,5 +39,5 @@ export class UserWeights {
   userWeeklyWorkout: number;
 
   @ManyToOne(() => User, (user) => user.weights)
-  book: Relation<User>;
+  weights: Relation<User[]>;
 }
