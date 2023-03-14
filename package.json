@@ -10,7 +10,9 @@
     "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
+    "@types/connect-sqlite3": "^0.9.2",
     "@types/express": "^4.17.14",
+    "@types/express-session": "^1.17.6",
     "@types/glob": "^8.1.0",
     "@types/ip": "^1.1.0",
     "@types/multer": "^1.4.7",
